@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Upload Music File</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+        }
+
+        .upload-form {
+            max-width: 400px;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+        }
+
+        input[type="file"] {
+            margin-bottom: 15px;
+        }
+
+        .message {
+            margin-top: 20px;
+            color: green;
+        }
+
+        .error {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+
+<h2>Upload Music File</h2>
+
+<div class="upload-form">
+    <form id="uploadForm" enctype="multipart/form-data">
+        <input type="file" name="file" accept=".mp3,.wav" required><br>
+        <button type="submit">Upload</button>
+    </form>
+
+    <div class="message" id="message"></div>
+</div>
+
+<script>
+    const form = document.getElementById('uploadForm');
+    const messageDiv = document.getElementById('message');
+
+    form.addEventListener('submit', function (event) {
+        event.preventDefault();
+
+        const formData = new FormData(form);
+
+        fetch('/upload', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.text())
+        .then(data => {
+            messageDiv.textContent = data;
+            messageDiv.classList.remove('error');
+        })
+        .catch(error => {
+            messageDiv.textContent = 'Upload failed: ' + error;
+            messageDiv.classList.add('error');
+        });
+    });
+</script>
+
+</body>
+</html>
