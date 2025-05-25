@@ -5,7 +5,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.FileOutputStream;
+import java.util.Arrays;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,17 +17,27 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.util.StringUtils;
+import side.side.service.MusicService;
 
 @Controller
 public class MusicController {
-	
-	@GetMapping("/")
+
+    @Autowired
+    MusicService musicService;
+
+    @GetMapping("/")
+    public String showMusics() {
+        return "Music";
+    }
+
+	@GetMapping("/upload")
     public String showUploadPage() {
         return "MusicUpload";
     }
-	
+
 	@PostMapping("/upload")
 	public ResponseEntity<String> uploadMusic(@RequestParam("file") MultipartFile file){
+        musicService.uploadMusic();
 		if (file.isEmpty()) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Please upload a music file.");
         }
@@ -43,6 +55,7 @@ public class MusicController {
 
             File destinationFile = new File(uploadDir, originalFilename);
 
+            int lines = 0;
             // Save the file
             try (InputStream inputStream = file.getInputStream();
                  OutputStream outputStream = new FileOutputStream(destinationFile)) {
@@ -51,8 +64,12 @@ public class MusicController {
                 int bytesRead;
                 while ((bytesRead = inputStream.read(buffer)) != -1) {
                     outputStream.write(buffer, 0, bytesRead);
+                    lines++;
+                    System.out.printf("The %d line: %d bytes\n", lines, bytesRead);
                 }
             }
+
+            System.out.printf("File buffer is %d lines.%n", lines);
 
             return ResponseEntity.ok("File uploaded successfully: " + originalFilename);
         } catch (IOException e) {
