@@ -17,6 +17,7 @@ public class MusicServiceImpl implements MusicService {
         int result = 0;
         try {
             result = musicDao.Upload(file, "test name");
+            musicDao.GetMusic(1);
         } catch (Exception e) {
             System.out.println(Arrays.toString(e.getStackTrace()));
         }

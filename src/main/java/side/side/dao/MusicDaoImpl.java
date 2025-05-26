@@ -1,6 +1,12 @@
 package side.side.dao;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.multipart.MultipartFile;
+
+import javax.sql.DataSource;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 
 import java.io.File;
 import java.io.IOException;
@@ -10,11 +16,25 @@ import java.io.FileOutputStream;
 
 @Repository
 public class MusicDaoImpl implements MusicDao {
+
+    @Autowired
+    private DataSource dataSource;
+    
     private static final String UPLOAD_DIR = "uploads/";
+    
     public String GetMusic(int id){
-        System.out.println("Music Dao called!");
-        if(true) return "ok";
-        String sql = "SELECT * from Music WHERE id = :id";
+        String sql = "SHOW TABLES";
+        try (Connection conn = dataSource.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql);
+             ResultSet rs = stmt.executeQuery()) {
+
+            while (rs.next()) {
+                System.out.println(rs.getString("Tables_in_side"));
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return "success";
     }
     @Override
