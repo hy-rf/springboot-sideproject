@@ -1,10 +1,7 @@
 package side.side.service;
 
-import org.springframework.stereotype.Component;
+import org.springframework.web.multipart.MultipartFile;
 
-@Component
-public class MusicService {
-    public void uploadMusic(){
-        System.out.println("Upload Success!");
-    }
+public interface MusicService {
+    public void UploadMusic(MultipartFile file);
 }
