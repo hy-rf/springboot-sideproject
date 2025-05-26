@@ -33,6 +33,7 @@ public class AlbumController {
 
     /**
      * Create new album
+     * check login status -> check permission -> verify input -> add album
      * @return
      */
     @PostMapping("/album")
@@ -42,6 +43,7 @@ public class AlbumController {
 
     /**
      * Update album by id
+     * check login status -> check permission -> check if id exists -> verify input -> update album
      * @return
      */
     @PutMapping("/album/{id}")
@@ -51,6 +53,7 @@ public class AlbumController {
 
     /**
      * Delete album by id
+     * check login status -> check permission -> check if id exists -> delete album
      * @return
      */
     @DeleteMapping("/album/{id}")
