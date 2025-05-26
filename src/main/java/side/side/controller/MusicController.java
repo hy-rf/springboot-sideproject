@@ -1,11 +1,5 @@
 package side.side.controller;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.io.FileOutputStream;
-import java.util.Arrays;
 import java.util.Objects;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +8,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.util.StringUtils;
@@ -27,12 +20,12 @@ public class MusicController {
     MusicService musicService;
 
     @GetMapping("/")
-    public String showMusics() {
+    public String Index() {
         return "Music";
     }
 
 	@GetMapping("/upload")
-    public String showUploadPage() {
+    public String ShowUploadPage() {
         return "MusicUpload";
     }
 
