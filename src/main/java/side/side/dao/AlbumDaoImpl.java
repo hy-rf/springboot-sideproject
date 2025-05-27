@@ -1,6 +1,5 @@
 package side.side.dao;
 
-import org.springframework.stereotype.Service;
 import side.side.dto.AlbumDto;
 import org.springframework.stereotype.Repository;
 
