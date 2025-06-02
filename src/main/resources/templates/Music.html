@@ -1,40 +1,72 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8" />
     <title>Music</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            margin: 40px;
+          font-family: Arial, sans-serif;
+          margin: 40px;
         }
 
         .upload-form {
-            max-width: 400px;
-            padding: 20px;
-            border: 1px solid #ccc;
-            border-radius: 10px;
+          max-width: 400px;
+          padding: 20px;
+          border: 1px solid #ccc;
+          border-radius: 10px;
+          margin-bottom: 30px;
         }
 
         input[type="file"] {
-            margin-bottom: 15px;
+          margin-bottom: 15px;
         }
 
         .message {
-            margin-top: 20px;
-            color: green;
+          margin-top: 20px;
+          color: green;
         }
 
         .error {
-            color: red;
+          color: red;
+        }
+
+        ul {
+          list-style-type: none;
+          padding: 0;
+        }
+
+        li {
+          margin-bottom: 10px;
+        }
+
+        audio {
+          display: block;
+          margin-top: 5px;
         }
     </style>
 </head>
 <body>
+<div id="app">
+    <h2>Music</h2>
 
-<h2>Music</h2>
+    <div class="upload-form">
+        <h3>Upload Music</h3>
+        <input type="file" @change="handleFileUpload" accept="audio/*" />
+        <button @click="uploadMusic">Upload</button>
+        <p class="message" v-if="message">{{ message }}</p>
+        <p class="error" v-if="error">{{ error }}</p>
+    </div>
 
-<a href="/upload">Upload</a>
+    <h3>Music List</h3>
+    <ul>
+        <li v-for="(music, index) in musicList" :key="index">
+            {{ music.name }}
+            <audio :src="music.url" controls></audio>
+        </li>
+    </ul>
+</div>
 
+<script src="/index.js"></script>
 </body>
 </html>
